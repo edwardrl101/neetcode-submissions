@@ -1,0 +1,32 @@
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        q = deque()
+        m, n = len(board), len(board[0])
+        dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+
+        for r in range(m):
+            for c in range(n):
+                if board[r][c] == 'O':
+                    if r == 0 or r == m-1 or c == 0 or c == n-1:
+                        q.append((r, c))
+                        board[r][c] = 'T'
+        
+        while q:
+            nr, nc = q.popleft()
+            for dr, dc in dirs:
+                row, col = nr + dr, nc + dc
+                if not (0 <= row < m and 0 <= col < n) or board[row][col] == 'X' or board[row][col] == 'T':
+                    continue
+                q.append((row, col))
+                board[row][col] = 'T'
+                
+                
+
+        for r in range(m):
+            for c in range(n):
+                if board[r][c] == 'O':
+                    board[r][c] = 'X'
+                elif board[r][c] == 'T':
+                    board[r][c] = 'O'
+
+                    
